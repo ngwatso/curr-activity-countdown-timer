@@ -4,8 +4,12 @@ export const CountDownTimer = () => {
   // This function will calculate difference between current and target times
   const calculateTimeRemaining = () => {
     let currTime = new Date();
-    // Placeholder, need to add logic for endTime
-    let endTime = new Date("2021-07-25 03:00:00");
+
+    // If the day of week is Saturday, countdown will be 48 hours, otherwise, 24 hours
+    let endTime =
+      currTime.getDay() === 6
+        ? new Date().setHours(48, 0, 0, 0)
+        : new Date().setHours(24, 0, 0, 0);
 
     let timeDiff = endTime - currTime;
 
@@ -67,8 +71,8 @@ export const CountDownTimer = () => {
 
   return (
     <div className="countdown-timer">
-      <div>Countdown: {convertTimeFormat(timeRemaining)}</div>
       <div>Current Activity: {currActivity()}</div>
+      <div>Countdown: {convertTimeFormat(timeRemaining)}</div>
     </div>
   );
 };
