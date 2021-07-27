@@ -63,6 +63,7 @@ export const CountDownTimer = () => {
 
   currActivity();
 
+  // Need to address why the useEffect stops firing
   useEffect(() => {
     const timer =
       timeRemaining > 0 && setTimeout(() => setTimeRemaining(time), 1000);
