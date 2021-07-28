@@ -53,6 +53,7 @@ export const CountDownTimer = () => {
       "Saturday"
     ];
 
+    // Need to work on wording on this, not able to pull up correct activity
     const activityList = {
       weekOne: {
         Sunday: "Voting Session 1",
