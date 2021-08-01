@@ -4,22 +4,14 @@ export const CountDownTimer = () => {
   // This function will calculate difference between current and target times
   const calculateTimeRemaining = () => {
     let currTime = new Date();
-    // let currTime = new Date("2021-08-08T23:59:59");
-    // let currTime = new Date("2021-08-09T00:00:00");
-    // console.log("currTime", currTime);
 
     // If the day of week is Saturday, countdown will be 48 hours, otherwise, 24 hours
-    let endTime = new Date().setHours(24, 0, 0, 0);
-    // console.log("endTime", convertTimeFormat(endTime));
-    // currTime.getDay() === 6
-    //   ? new Date().setHours(48, 0, 0, 0)
-    //   : new Date().setHours(24, 0, 0, 0);
-
-    // let endTime = new Date("2021-08-09T00:00:00");
+    let endTime =
+      currTime.getDay() === 6
+        ? new Date().setHours(48, 0, 0, 0)
+        : new Date().setHours(24, 0, 0, 0);
 
     let timeDiff = endTime - currTime;
-
-    // console.log("timeDiff", convertTimeFormat(timeDiff));
 
     return timeDiff;
   };
@@ -31,6 +23,7 @@ export const CountDownTimer = () => {
     let hours = Math.floor(timeVar / (1000 * 60 * 60));
     let minutes = Math.floor((timeVar / (1000 * 60)) % 60);
     let seconds = Math.floor(timeVar / 1000) % 60;
+  };
 
     return [hours, minutes, seconds]
       .map((v) => (v < 10 ? "0" + v : v))
@@ -38,8 +31,9 @@ export const CountDownTimer = () => {
       .join(":");
   };
 
-  const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining());
-  const [week, setWeek] = useState("weekOne");
+  let time = calculateTimeRemaining();
+
+  const [timeRemaining, setTimeRemaining] = useState(time);
 
   // This function will display the current activity based on day of the week
   const currActivity = () => {
@@ -53,30 +47,37 @@ export const CountDownTimer = () => {
       "Saturday"
     ];
 
-    // Need to work on wording on this, not able to pull up correct activity
     const activityList = {
-      weekOne: {
-        Sunday: "Voting Session 1",
-        Monday: "Read",
-        Tuesday: "Draw",
-        Wednesday: "Write",
-        Thursday: "Squadding Up",
-        Friday: "Point Share",
-        Saturday: "Matchup"
-      },
-      weekTwo: {
-        Sunday: "Big Final Reveal",
-        Monday: "Matchup",
-        Tuesday: "Voting Session 2",
-        Wednesday: "Matchup",
-        Thursday: "Voting Session 3",
-        Friday: "Matchup",
-        Saturday: "Big Final Reveal"
-      }
+      Sunday: "Leaderboard",
+      Monday: "Read",
+      Tuesday: "Draw",
+      Wednesday: "Write",
+      Thursday: "Matchups",
+      Friday: "Point Allocation",
+      Saturday: "Leaderboard"
     };
 
     let day = daysOfWeek[new Date().getDay()];
-    // let day = daysOfWeek[new Date("2021-08-08T23:59:59").getDay()];
+    // console.log(day);
+    return activityList[day];
+  };
+
+  currActivity();
+
+  useEffect(() => {
+    const timer =
+      timeRemaining > 0 && setTimeout(() => setTimeRemaining(time), 1000);
+    return () => timer;
+  }, [time, timeRemaining]);
+
+  return (
+    <div className="countdown-timer">
+      <div>Current Activity: {currActivity()}</div>
+      <div>Countdown: {convertTimeFormat(timeRemaining)}</div>
+    </div>
+  );
+};
+
     // let day = daysOfWeek[new Date("2021-08-09T00:00:00").getDay()];
 
     const toggleWeek = (week) => {
