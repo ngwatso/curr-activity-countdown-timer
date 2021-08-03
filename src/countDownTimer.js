@@ -40,7 +40,7 @@ export const CountDownTimer = () => {
 
   const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining());
   const [week, setWeek] = useState("weekOne");
-  // const [testWeek, setTestWeek] = useState("testWeekOne");
+  const [dayCount, setDayCount] = useState(1);
 
   // This function will display the current activity based on day of the week
   const currActivity = () => {
@@ -76,9 +76,9 @@ export const CountDownTimer = () => {
     };
 
     let day = daysOfWeek[new Date().getDay()];
-    // console.log(day);
     // let day = daysOfWeek[new Date("2021-08-08T23:59:59").getDay()];
-    // let day = daysOfWeek[new Date("2021-08-01T00:00:00").getDay()];
+    // let day = daysOfWeek[new Date("2021-08-02T00:00:00").getDay()];
+    // console.log(day);
 
     const toggleWeek = (week) => {
       week === "weekOne" ? setWeek("weekTwo") : setWeek("weekOne");
@@ -86,17 +86,17 @@ export const CountDownTimer = () => {
 
     if (day === "Monday" && convertTimeFormat(timeRemaining) === "00:00") {
       // console.log("TOGGLE");
-      // console.log(week);
+      // console.log('1', week);
 
       toggleWeek(week);
     }
     // toggleWeek(week);
     // console.log(convertTimeFormat(timeRemaining));
-    // console.log(week);
+    // console.log('2', week);
     return activityList[week][day];
   };
 
-  currActivity();
+  // currActivity();
 
   useEffect(() => {
     const timer =
